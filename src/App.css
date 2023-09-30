@@ -9,7 +9,7 @@
 
 .title{
   /* width:200px; */
-  /* text-decoration: line-through; */
+  text-decoration: line-through;
 }
 
 @media (prefers-reduced-motion: no-preference) {

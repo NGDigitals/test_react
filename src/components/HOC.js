@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 
-const HOC = (CallbackComponent) => {
+const HOC = (WrappedComponent) => {
 
-    // return class extends Component{
     class HOCComponent extends Component{
         _timer = null;
-        state = {
-            isLoading: true
-        };
+        // state = {
+        //     isLoading: true
+        // };
+
+        constructor(props) {
+            super(props);
+            this.state = {isLoading: true};
+        }
+
         componentDidMount() {
             this._timer = setTimeout(() => {
                 this.setState({isLoading: false})
@@ -24,7 +29,7 @@ const HOC = (CallbackComponent) => {
 
         render(){
             return this.state.isLoading ? (<h1>Please wait...</h1>) 
-            : (<CallbackComponent {...this.props} />);
+            : (<WrappedComponent {...this.props} />);
         }
     } 
     return HOCComponent;

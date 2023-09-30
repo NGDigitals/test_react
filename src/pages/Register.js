@@ -1,9 +1,12 @@
 import React, {useState, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
+import HOC from '../components/HOC';
+import WithLoader from '../components/WithLoader';
+import PropTypes from "prop-types";
 
-const Register = () => {
-    // let [name, setName] = useState("Ned stark");
-    // let [email, setEmail] = useState();
+const Register = (props/*{ name= "My name" }*/) => {
+    let [name, setName] = useState("Ned stark");
+    let [email, setEmail] = useState();
     // we declare the input inside the variable
     let nameRef = useRef();
     let emailRef = useRef();
@@ -12,12 +15,9 @@ const Register = () => {
 
     // we are referring to input to change the value
     const submitButton = () => {
-        console.log(nameRef.current.value)
-        // setName(nameRef.current.value);
-        // setEmail(emailRef.current.value);
-
         let name = nameRef.current.value
         let email = emailRef.current.value
+        console.log('Name', name, 'Email', email)
     };
 
     return (
@@ -36,7 +36,7 @@ const Register = () => {
                     ref={emailRef}
                     type="text"
                 />
-                <button type="button" onClick={submitButton}>
+                <button type="button" onClick={() => submitButton() /*props.submitForm()*/}>
                     Submit
                 </button>
             </div>
@@ -49,4 +49,20 @@ const Register = () => {
     );
 }
 
-export default Register;
+Register.defaultProps = {
+    name: 'No name'
+}
+
+Register.propTypes = {
+    name: PropTypes.string.isRequired,
+    submitForm: PropTypes.func.isRequired,
+    option: PropTypes.oneOf([true, false]),
+    another: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.number,
+        PropTypes.string,
+        // PropTypes.instanceOf(Person)
+    ])
+};
+
+export default WithLoader(Register);
